@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>body, html{font-family:Arial, Helvetica, sans-serif;}</style>
+    <script src="https://unpkg.com/ag-grid@17.0.0/dist/ag-grid.min.js"></script>
+</head>
+<body>
+<a href="/create">Add data from form</a>
+<br>
+<a href="/seed">Add 100 random datas to db</a>
+
+
+<div style="width: 800px; margin: 0 auto;">
+    <h2>Search API</h2>
+    <label for="search-query">Search query</label>
+    <input id="search-query" type="text" name="Search query">
+    <label for="search-field"> Search field</label>
+    <select id="search-field">
+        <option value="all">All fields</option>
+        <option value="email">Email</option>
+        <option value="phone">Phone</option>
+        <option value="message">Message</option>
+    </select>
+    <div id="results-grid" style="height: 400px; margin-top: 15px;" class="ag-theme-balham"></div>
+    <script src="{{ url_for('static', filename='js/data-grid.js') }}"></script>
+</div>
+</body>
+</html>

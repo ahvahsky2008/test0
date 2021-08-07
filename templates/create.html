@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <style>
+        .form-group.required.control-label:before{
+            color: red;
+            content: "*";
+            position: absolute;
+            margin-left: -10px;
+        }
+    </style>
+      <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+      <title></title>
+   </head>
+   <body>
+      <div> </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-4">
+               <h4></h4>
+
+               <form class="row g-3 needs-validation" novalidate>
+                  <div class="col-md-12 form-group required control-label">
+                     <label for="validationCustom01" class="form-label">Email</label>
+                     <input type="text" class="form-control" id="email" value="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required >
+                     <div class="invalid-feedback">
+                        Pls add email 
+                     </div>
+                  </div>
+
+                  <div class="col-md-12 form-group required control-label">
+                     <label for="validationCustom01" class="form-label">Phone</label>
+                     <input type="text" class="form-control" id="phone" placeholder="792812345678" value="" pattern="^((\+7|7|8)+([0-9]){10})$" required>
+                     <div class="invalid-feedback">
+                        Pls add phone number
+                     </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label for="validationCustom01" class="form-label">Message</label>
+                    <textarea class="form-control " id="message" placeholder=""></textarea>
+                  </div>
+
+                  <div class="col-12">
+                    <button id="sbmt" class="btn btn-primary" onclick="return false" type="submit">Submit form</button>
+                  </div>
+               </form>
+            </div>
+            <div class="col-md-4"> </div>
+         </div>
+      </div>
+   </body>
+   <script type="text/javascript">
+    
+    $('#sbmt').click(function(){
+
+        var form = document.querySelectorAll('.needs-validation')[0];
+        form.checkValidity();
+        form.classList.add('was-validated');
+        
+        if (form.checkValidity()==true){
+            console.log('true');
+
+             var email = document.getElementById('email').value; ;
+             var phone = document.getElementById('phone').value; ;
+             var message = document.getElementById('message').value; ;
+
+             $.ajax({
+                url: '/add',
+                method: 'post',
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    'email': email,
+                    'phone':phone,
+                    'message':message,
+                    }),
+                
+                error: function(data){
+                  console.log('error');
+                  console.log(data);
+                },
+                success: function(data){
+                    console.log('success');
+                    if (data=='ok'){
+                        window.location = "/";
+                    }
+                    else{
+                        alert(data);
+                    }
+                    
+                },
+                done: function(data){
+                  console.log('done');
+                  console.log(data);
+                }
+
+            });
+
+        }
+        else{
+            console.log('false');
+        }
+        
+        return false;
+
+});
+</script>
+</html>
